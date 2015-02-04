@@ -8,7 +8,7 @@ module Middleman
 
         app.after_configuration do
 
-          dir = File.join(build_dir, images_dir)
+          dir = File.join(app.root, build_dir, images_dir)
           prefix = build_dir + File::SEPARATOR
 
           after_build do |builder|
@@ -29,7 +29,7 @@ module Middleman
 
               # generate fallbacks
               %w(jpg png).each do |ext|
-                `#{options[:inkscape_bin]} --export-png=#{basename}.#{ext} #{options[:inkscape_options]} --without-gui #{basename}.svg > /dev/null 2>&1`
+                `#{options[:inkscape_bin]} #{basename}.svg --export-png=#{basename}.#{ext} #{options[:inkscape_options]} --without-gui`
                 builder.say_status :svg_fallback, "#{basename}.#{ext}"
               end
             end
